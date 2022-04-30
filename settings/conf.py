@@ -3,8 +3,10 @@ from . import get_env_variable
 
 # ------------------------------------------------
 #
-SECRET_KEY = get_env_variable('SECRET_KEY')
-ADMIN_SITE_URL = get_env_variable('ADMIN_SITE_URL')
+SECRET_KEY = '123'
+ADMIN_SITE_URL = 'custom_admin'
+# SECRET_KEY = get_env_variable('SECRET_KEY')
+# ADMIN_SITE_URL = get_env_variable('ADMIN_SITE_URL')
 
 # ------------------------------------------------
 #
@@ -15,6 +17,14 @@ EMAIL_HOST_USER = get_env_variable('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = get_env_variable('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 587
 
+# ------------------------------------------------
+#
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': (
+        'rest_framework.pagination.PageNumberPagination',
+    ),
+    'PAGE_SIZE': 2
+}
 # ------------------------------------------------
 #
 DEBUG_TOOLBAR_PANELS = [
@@ -36,23 +46,42 @@ DEBUG_TOOLBAR_PATCH_SETTINGS = False
 # ------------------------------------------------
 #
 SHELL_PLUS_PRE_IMPORTS = [
-    ('django.db', ('connection', 'reset_queries', 'connections')),
-    ('datetime', ('datetime', 'timedelta', 'date')),
-    ('json', ('loads', 'dumps')),
+    (
+        'django.db',
+        (
+            'connection',
+            'reset_queries',
+            'connections',
+        ),
+    ),
+    (
+        'datetime',
+        (
+            'datetime',
+            'timedelta',
+            'date',
+        ),
+    ),
+    (
+        'json',
+        (
+            'loads',
+            'dumps',
+        ),
+    ),
 ]
-# SHELL_PLUS_MODEL_ALIASES = {
-#     'auths': {
-#         'CustomUser': 'U',
-#     },
-#     'university': {
-#         'Student': 'S',
-#         'Account': 'A',
-#         'Group': 'G',
-#         'Professor': 'P',
-#         'Homework': 'H',
-#         'File': 'FF',
-#     },
-# }
+SHELL_PLUS_MODEL_ALIASES = {
+    'auths': {
+        'CustomUser': 'U',
+    },
+    'anime': {
+        'Anime': 'A',
+        'ReleaseDate': 'RD',
+        'Title': 'T',
+        'Description': 'D',
+        'Genre': 'G',
+    },
+}
 SHELL_PLUS = 'ipython'
 SHELL_PLUS_PRINT_SQL = True
 SHELL_PLUS_PRINT_SQL_TRUNCATE = 1000

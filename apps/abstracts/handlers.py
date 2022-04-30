@@ -21,5 +21,5 @@ class ViewHandler(HttpResponseMixin):
 
         return self.get_http_response(
             request,
-            'university/user_login.html'
+            'user_login.html'
         )
