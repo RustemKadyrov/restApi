@@ -2,6 +2,7 @@ from datetime import datetime
 
 from django.db.models import (
     Model,
+    QuerySet,
     ManyToManyField,
     ForeignKey,
     OneToOneField,
@@ -14,29 +15,6 @@ from django.db.models import (
 )
 from abstracts.models import AbstractDateTime
 from abstracts.validators import AbstractValidator
-
-
-class Description(Model):
-    """Description entity."""
-
-    text_en = TextField(
-        verbose_name='текст на английском',
-        default=''
-    )
-    text_ru = TextField(
-        verbose_name='текст на русском',
-        default=''
-    )
-
-    class Meta:
-        ordering = (
-            '-id',
-        )
-        verbose_name = 'описание'
-        verbose_name_plural = 'описания'
-
-    def __str__(self) -> str:
-        return f'Описание тайтла: {self.anime.title.name}'
 
 
 class Title(Model):
@@ -97,7 +75,6 @@ class AnimeQuerySet(QuerySet):
         )
 
 
-
 class Anime(AbstractDateTime, AbstractValidator):
     """Anime entity."""
 
@@ -117,14 +94,9 @@ class Anime(AbstractDateTime, AbstractValidator):
     title = OneToOneField(
         Title,
         on_delete=CASCADE,
-        verbose_name='название'
+        verbose_name='название',
+        null=True, blank=True
     )
-    description = OneToOneField(
-        Description,
-        on_delete=CASCADE,
-        verbose_name='описание'
-    )
-
     objects = AnimeQuerySet().as_manager()
 
     class Meta:
@@ -154,6 +126,35 @@ class Anime(AbstractDateTime, AbstractValidator):
         # super().delete()
 
 
+class Description(Model):
+    """Description entity."""
+
+    anime = OneToOneField(
+        Anime,
+        on_delete=CASCADE,
+        verbose_name='аниме',
+        null=True, blank=True
+    )
+    text_en = TextField(
+        verbose_name='текст на английском',
+        default=''
+    )
+    text_ru = TextField(
+        verbose_name='текст на русском',
+        default=''
+    )
+
+    class Meta:
+        ordering = (
+            '-id',
+        )
+        verbose_name = 'описание'
+        verbose_name_plural = 'описания'
+
+    def __str__(self) -> str:
+        return 'Описание тайтла'
+
+
 class Genre(Model):
     """Genre entity."""
 
@@ -176,4 +177,3 @@ class Genre(Model):
 
     def __str__(self) -> str:
         return f'Жанр: {self.name}'
-

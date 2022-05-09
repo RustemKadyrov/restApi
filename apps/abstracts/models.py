@@ -1,16 +1,20 @@
-from django.db import models
+from django.db.models import (
+    Model,
+    DateTimeField,
+)
 
 
-class AbstractDateTime(models.Model):
-    datetime_created = models.DateTimeField(
+class AbstractDateTime(Model):
+    
+    datetime_created = DateTimeField(
         verbose_name='время создания',
         auto_now_add=True
     )
-    datetime_updated = models.DateTimeField(
+    datetime_updated = DateTimeField(
         verbose_name='время обновления',
         auto_now=True
     )
-    datetime_deleted = models.DateTimeField(
+    datetime_deleted = DateTimeField(
         verbose_name='время удаления',
         null=True,
         blank=True

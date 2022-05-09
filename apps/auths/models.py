@@ -4,6 +4,7 @@ from django.contrib.auth.models import (
 )
 from django.utils import timezone
 from django.db import models
+from django.db.models import QuerySet
 from django.contrib.auth.base_user import BaseUserManager
 from django.core.exceptions import ValidationError
 
